@@ -1,11 +1,11 @@
 package ru.blackdaber.task.service;
 
 import ru.blackdaber.task.DataCenter;
-import ru.blackdaber.task.serverInfo.ResourceRequest;
-import ru.blackdaber.task.serverInfo.Server;
 import ru.blackdaber.task.optimization.EnergyEfficencyOptimizationStrategy;
 import ru.blackdaber.task.optimization.IOptimizationStrategy;
 import ru.blackdaber.task.optimization.LoadBalancingOptimizationStrategy;
+import ru.blackdaber.task.serverInfo.ResourceRequest;
+import ru.blackdaber.task.serverInfo.Server;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -24,9 +24,11 @@ public class DataCenterService {
     public void addServer(Server s) {
         dataCenter.servers.add(s);
     }
-    public void removeServer(Server s) {
+
+    public void removeServe(Server s) {
         dataCenter.servers.remove(s);
     }
+
     public int getTotalEnergyConsumption() {
         int total = 0;
         for (Server server : dataCenter.servers) {
