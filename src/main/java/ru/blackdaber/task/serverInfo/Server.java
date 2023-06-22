@@ -1,16 +1,12 @@
-package ru.faang.school.task_2;
+package ru.blackdaber.task.serverInfo;
 
 public class Server {
     private double load;
     private final double maxLoad;
     private final double energyConsumption;
-    public Server( double maxLoad, double energyConsumption) {
-        if (maxLoad <= 0) {
-            throw new IllegalArgumentException("Максимальная нагрузка должна быть больше 0");
-        }
-        if (energyConsumption <= 0) {
-            throw new IllegalArgumentException("Энергозатраты должны быть больше 0");
-        }
+
+    public Server(double maxLoad, double energyConsumption) {
+        validate(maxLoad, energyConsumption);
         this.load = 0;
         this.maxLoad = maxLoad;
         this.energyConsumption = energyConsumption;
@@ -33,7 +29,24 @@ public class Server {
     public double getMaxLoad() {
         return maxLoad;
     }
+
     public double getEnergyConsumption() {
         return energyConsumption;
+    }
+
+    public void validate(double maxLoad, double energyConsumption) {
+        if (maxLoad <= 0) {
+            throw new IllegalArgumentException("Максимальная нагрузка должна быть больше 0");
+        }
+        if (energyConsumption <= 0) {
+            throw new IllegalArgumentException("Энергозатраты должны быть больше 0");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Create new server " +
+                "\n max load - " + maxLoad +
+                "\n energy consumption of server - " + energyConsumption;
     }
 }

@@ -1,6 +1,7 @@
-package ru.faang.school.task_2;
+package ru.blackdaber.task;
 
-import ru.faang.school.task_2.service.DataCenterService;
+import ru.blackdaber.task.serverInfo.Server;
+import ru.blackdaber.task.service.DataCenterService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class DataCenter {
         DataCenter dataCenter = new DataCenter();
         dataCenter.test();
     }
+
     public void test() {
         int size = 8;
         addServers(size);
@@ -25,20 +27,18 @@ public class DataCenter {
         service.timerLoadOptimization();
         service.timerEnergyOptimization();
     }
+
     private void addServers(int size) {
         double maxLoad = random.nextDouble(500);
         double energyConsumption = random.nextDouble(1000);
-        for(int i = 1; i <= size; i++) {
+        for (int i = 1; i <= size; i++) {
             service.addServer(createServer(maxLoad, energyConsumption));
         }
     }
+
     private Server createServer(double maxLoad, double energyConsumption) {
         Server server = new Server(maxLoad, energyConsumption);
-        System.out.println(
-                "Create new server " +
-                        "\n max load - " + maxLoad +
-                        "\n energy consumption of server - " + energyConsumption
-        );
+        System.out.println(server);
         return server;
     }
 

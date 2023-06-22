@@ -1,36 +1,35 @@
-package ru.faang.school.task_2.service;
+package ru.blackdaber.task.service;
 
-import ru.faang.school.task_2.DataCenter;
-import ru.faang.school.task_2.ResourceRequest;
-import ru.faang.school.task_2.Server;
-import ru.faang.school.task_2.optimization.EnergyEfficencyOptimizationStrategy;
-import ru.faang.school.task_2.optimization.LoadBalancingOptimizationStrategy;
+import ru.blackdaber.task.DataCenter;
+import ru.blackdaber.task.serverInfo.ResourceRequest;
+import ru.blackdaber.task.serverInfo.Server;
+import ru.blackdaber.task.optimization.EnergyEfficencyOptimizationStrategy;
+import ru.blackdaber.task.optimization.IOptimizationStrategy;
+import ru.blackdaber.task.optimization.LoadBalancingOptimizationStrategy;
 
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 public class DataCenterService {
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-    private final LoadBalancingOptimizationStrategy optimizationLoadStrategy = new LoadBalancingOptimizationStrategy();
-    private final EnergyEfficencyOptimizationStrategy optimizationEnergyStrategy = new EnergyEfficencyOptimizationStrategy(this);
+    private final ScheduledExecutorService executorService;
+    private final IOptimizationStrategy optimizationLoadStrategy = new LoadBalancingOptimizationStrategy();
+    private final IOptimizationStrategy optimizationEnergyStrategy = new EnergyEfficencyOptimizationStrategy(this);
     private final DataCenter dataCenter;
-    private final long PERIOD = 30L;
+    private static final long PERIOD = 30L;
     public DataCenterService(DataCenter dataCenter) {
         this.dataCenter = dataCenter;
+        this.executorService = Executors.newScheduledThreadPool(1);
     }
     public void addServer(Server s) {
         dataCenter.servers.add(s);
     }
-    public void deleteServer(Server s) {
+    public void removeServer(Server s) {
         dataCenter.servers.remove(s);
     }
     public int getTotalEnergyConsumption() {
         int total = 0;
         for (Server server : dataCenter.servers) {
-            if(server.getLoad() == 0) {
-                continue;
-            }
             total += server.getEnergyConsumption();
         }
         return total;
@@ -95,6 +94,7 @@ public class DataCenterService {
             }
         }, ENERGY_DELAY, PERIOD, TimeUnit.SECONDS);
     }
+
     private void logger(List<Server> servers) {
         servers.forEach(server -> System.out.println("load of server - " + server.getLoad()));
         System.out.println("Servers energy consumption - " + getTotalEnergyConsumption());

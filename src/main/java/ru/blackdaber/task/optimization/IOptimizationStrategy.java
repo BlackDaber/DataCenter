@@ -1,6 +1,6 @@
-package ru.faang.school.task_2.optimization;
+package ru.blackdaber.task.optimization;
 
-import ru.faang.school.task_2.DataCenter;
+import ru.blackdaber.task.DataCenter;
 
 public interface IOptimizationStrategy {
     void optimize(DataCenter dataCenter);

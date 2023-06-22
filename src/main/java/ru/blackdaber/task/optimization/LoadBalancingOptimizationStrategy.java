@@ -1,7 +1,7 @@
-package ru.faang.school.task_2.optimization;
+package ru.blackdaber.task.optimization;
 
-import ru.faang.school.task_2.DataCenter;
-import ru.faang.school.task_2.Server;
+import ru.blackdaber.task.DataCenter;
+import ru.blackdaber.task.serverInfo.Server;
 
 import java.util.List;
 
@@ -12,10 +12,7 @@ public class LoadBalancingOptimizationStrategy implements IOptimizationStrategy 
         int numServers = servers.size();
 
         // Считаем среднюю нагрузку на сервер
-        double totalLoad = 0;
-        for (Server server : servers) {
-            totalLoad += server.getLoad();
-        }
+        double totalLoad = totalLoad(servers);
         double averageLoad = totalLoad / numServers;
 
         // Распределяем нагрузку
@@ -44,5 +41,14 @@ public class LoadBalancingOptimizationStrategy implements IOptimizationStrategy 
                 }
             }
         }
+    }
+
+    private double totalLoad(List<Server> servers) {
+        double totalLoad = 0;
+        for (Server server : servers) {
+            totalLoad += server.getLoad();
+        }
+
+        return totalLoad;
     }
 }
